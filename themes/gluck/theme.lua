@@ -14,9 +14,42 @@ local dpi   = require("beautiful.xresources").apply_dpi
 local os = os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
+function scanDir(directory)
+    local i, fileList, popen = 0, {}, io.popen
+    for filename in popen([[find "]] ..directory.. [[" -name "*.[Jj][Pp][Gg]"]]):lines() do
+        i = i + 1
+        fileList[i] = filename
+    end
+    return fileList
+end
+
+function setupWallpapers(screen)
+    wallpaperList = scanDir("/home/gluckzhang/Pictures/awesome-backgrounds")
+
+    -- Apply a random wallpaper on startup.
+    gears.wallpaper.maximized(wallpaperList[math.random(1, #wallpaperList)], screen, false)
+
+    -- Apply a random wallpaper every changeTime seconds.
+    changeTime = 3600
+    wallpaperTimer = timer { timeout = changeTime }
+    wallpaperTimer:connect_signal("timeout", function()
+        gears.wallpaper.maximized(wallpaperList[math.random(1, #wallpaperList)], screen, false)
+
+        -- stop the timer (we don't need multiple instances running at the same time)
+        wallpaperTimer:stop()
+
+        --restart the timer
+        wallpaperTimer.timeout = changeTime
+        wallpaperTimer:start()
+    end)
+
+    -- initial start
+    wallpaperTimer:start()
+end
+
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-dark"
-theme.wallpaper                                 = theme.dir .. "/wall.png"
+theme.wallpaper                                 = setupWallpapers
 theme.font                                      = "Terminus 9"
 theme.fg_normal                                 = "#DDDDFF"
 theme.fg_focus                                  = "#EA6F81"
