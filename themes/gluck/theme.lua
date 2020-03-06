@@ -10,6 +10,7 @@ local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
 local dpi   = require("beautiful.xresources").apply_dpi
+local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 
 local os = os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
@@ -138,14 +139,18 @@ local clock = awful.widget.watch(
 )
 
 -- Calendar
-theme.cal = lain.widget.cal({
-    attach_to = { clock },
-    notification_preset = {
-        font = "Terminus 10",
-        fg   = theme.fg_normal,
-        bg   = theme.bg_normal
-    }
-})
+-- theme.cal = lain.widget.cal({
+--     attach_to = { clock },
+--     notification_preset = {
+--         font = "Terminus 10",
+--         fg   = theme.fg_normal,
+--         bg   = theme.bg_normal
+--     }
+-- })
+local cw = calendar_widget({placement = 'top_right'})
+clock:connect_signal("button::press", function(_, _, _, button)
+    if button == 1 then cw.toggle() end
+end)
 
 -- Mail IMAP check
 -- local mailicon = wibox.widget.imagebox(theme.widget_mail)
