@@ -61,6 +61,8 @@ run_once({ "urxvtd", "unclutter -root" }) -- entries must be separated by commas
 run_once({ "/usr/bin/gnome-screensaver" })
 -- natural scrolling
 run_once({ "synclient VertScrollDelta=-111", 'synclient HorizScrollDelta=-111' })
+-- close touchpad tap-to-click
+run_once({ "synclient MaxTapTime=0" })
 
 -- This function implements the XDG autostart specification
 --[[
