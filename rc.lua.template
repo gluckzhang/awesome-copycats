@@ -63,6 +63,8 @@ run_once({ "/usr/bin/gnome-screensaver" })
 run_once({ "synclient VertScrollDelta=-111", 'synclient HorizScrollDelta=-111' })
 -- close touchpad tap-to-click
 run_once({ "synclient MaxTapTime=0" })
+-- Turn off XServer's screen-saver and energy star features
+run_once({ "xset s off", "xset -dpms" })
 
 -- This function implements the XDG autostart specification
 --[[
