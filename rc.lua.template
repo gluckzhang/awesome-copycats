@@ -59,10 +59,10 @@ end
 
 run_once({ "urxvtd", "unclutter -root" }) -- entries must be separated by commas
 run_once({ "/usr/bin/gnome-screensaver" })
--- natural scrolling
-run_once({ "synclient VertScrollDelta=-111", 'synclient HorizScrollDelta=-111' })
--- close touchpad tap-to-click
-run_once({ "synclient MaxTapTime=0" })
+-- natural scrolling (ubuntu 20.04)
+run_once({ "gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true" })
+-- close touchpad tap-to-click (ubuntu 20.04)
+run_once({ "gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click false" })
 -- Turn off XServer's screen-saver and energy star features
 run_once({ "xset s off", "xset -dpms" })
 
