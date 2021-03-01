@@ -65,6 +65,10 @@ run_once({ "synclient VertScrollDelta=-111", "synclient HorizScrollDelta=-111" }
 run_once({ "synclient MaxTapTime=0" })
 -- Turn off XServer's screen-saver and energy star features
 run_once({ "xset s off", "xset -dpms" })
+-- Turn on NumLock (you might need to run `sudo apt-get install numlockx` first)
+run_once({ "numlockx on" })
+-- Copyq
+run_once({ "copyq" })
 
 -- This function implements the XDG autostart specification
 --[[
@@ -522,9 +526,9 @@ globalkeys = my_table.join(
     --     end,
     --     {description = "mpc on/off", group = "widgets"}),
 
-    -- Copy primary to clipboard (terminals to gtk)
-    awful.key({ modkey }, "c", function () awful.spawn.with_shell("xsel | xsel -i -b") end,
-              {description = "copy terminal to gtk", group = "hotkeys"}),
+    -- Pop up the menu of Copyq
+    awful.key({ modkey }, "c", function () awful.spawn("copyq show") end,
+              {description = "pop up the menu of Copyq", group = "hotkeys"}),
     -- Copy clipboard to primary (gtk to terminals)
     awful.key({ modkey }, "v", function () awful.spawn.with_shell("xsel -b | xsel") end,
               {description = "copy gtk to terminal", group = "hotkeys"}),
