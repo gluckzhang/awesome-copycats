@@ -69,6 +69,8 @@ run_once({ "xset s off", "xset -dpms" })
 run_once({ "numlockx on" })
 -- Copyq
 run_once({ "copyq" })
+-- set brightness
+run_once({ "brightness 0.8" })
 
 -- This function implements the XDG autostart specification
 --[[
@@ -109,7 +111,7 @@ local editor       = os.getenv("EDITOR") or "vim"
 local gui_editor   = os.getenv("GUI_EDITOR") or "subl"
 local browser      = os.getenv("BROWSER") or "google-chrome"
 local scrlocker    = "gnome-screensaver-command -l"
-local screenshot   = "maim -s --format png /dev/stdout | xclip -sel clip -t image/png"
+local screenshot   = "flameshot gui"
 local graphics     = "pinta"
 local file_manager = "nautilus"
 
@@ -527,7 +529,7 @@ globalkeys = my_table.join(
     --     {description = "mpc on/off", group = "widgets"}),
 
     -- Pop up the menu of Copyq
-    awful.key({ modkey }, "c", function () awful.spawn("copyq show") end,
+    awful.key({ modkey }, "c", function () awful.spawn("copyq menu") end,
               {description = "pop up the menu of Copyq", group = "hotkeys"}),
     -- Copy clipboard to primary (gtk to terminals)
     awful.key({ modkey }, "v", function () awful.spawn.with_shell("xsel -b | xsel") end,
